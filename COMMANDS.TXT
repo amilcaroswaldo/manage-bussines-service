@@ -1,0 +1,9 @@
+source venv/Scripts/activate
+deactivate
+pip install fastapi uvicorn sqlalchemy
+pip install aiosqlite
+pip freeze > requirements.txt
+pip install python-dotenv
+python tablas.py
+uvicorn main:app --reload
+http://127.0.0.1:8000/docs
