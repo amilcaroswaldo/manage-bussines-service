@@ -9,7 +9,7 @@ class GenericResponse(BaseModel):
     message: str
     # class  config:
     #     orm_mode = True  # Permite que Pydantic lea los datos de los modelos de SQLAlchemy
-    #     model_config = {'from_attributes': True}      
+    #     model_config = {'from_attributes': True}
 
 class ObjectResponse(BaseModel, Generic[T]):
     code: int

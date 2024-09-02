@@ -33,6 +33,21 @@ class ServicioBase(BaseModel):
 
 class ServicioCreateRequest(ServicioBase):
     pass
+class ServicioUpdateRequest(BaseModel):
+    id_servicio: int
+    descripcion: Optional[str] = None  # Puede ser None
+    unidad_medida_id: Optional[int] = None  # Puede ser None
+    cantidad: Optional[int] = None  # Puede ser None
+    precio: Optional[float] = None  # Puede ser None
+    @classmethod
+    def from_sqlalchemy(cls, servicio):
+        return cls(
+            descripcion=servicio.descripcion,
+            unidad_medida_id=servicio.unidad_medida_id,
+            cantidad=servicio.cantidad,
+            precio=float(servicio.precio),
+            id_servicio=servicio.id_servicio
+        )
 
 class ServicioResponse(ServicioBase):
     id_servicio: int

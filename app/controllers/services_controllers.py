@@ -2,7 +2,7 @@ from fastapi import APIRouter
 from ..services import service_service
 from ..models import services_models
 from ..models.common_responses import GenericResponse, ObjectResponse, ListResponse
-
+import pdb 
 router = APIRouter(
     prefix="/servicios",
     tags=["Servicios"],
@@ -42,7 +42,6 @@ async def getServiceByID(idServicioReq: int) -> GenericResponse | ObjectResponse
 async def getServiceByDescripcion(descripcionServicio: str) -> GenericResponse | ObjectResponse[services_models.ServicioResponse] :
     try:
         service = await service_service.obtenerServicioByDescripcion(descripcionServicio=descripcionServicio)
-        print(service)
         if service is None:
             return GenericResponse(code=404, message="Servicio no encontrado")
         return service
@@ -51,13 +50,14 @@ async def getServiceByDescripcion(descripcionServicio: str) -> GenericResponse |
     except Exception as e:
         return GenericResponse(code=500, message=str(e))
 
-@router.put("/updateService/{idServicio}")
-async def updateService(idServicio: int, requestService: services_models.ServicioCreateRequest) -> GenericResponse:
+@router.put("/updateService")
+async def updateService(request: services_models.ServicioUpdateRequest) -> GenericResponse:
     try:
-        updated_service = await service_service.actualizarServicio(idServicio=idServicio, requestService=requestService)
+        # pdb.set_trace()  # Esto iniciará el depurador en este punto
+        updated_service = await service_service.actualizarServicio(request)
         if updated_service is None:
             return GenericResponse(code=404, message="Servicio no encontrado")
-        return GenericResponse(code=200, message="Servicio actualizado exitosamente")
+        return updated_service
     except ValueError as e:
         return GenericResponse(code=400, message=str(e))
     except Exception as e:
@@ -69,7 +69,7 @@ async def deleteService(idServicio: int) -> GenericResponse:
         deleted_service = await service_service.eliminarServicio(idServicio=idServicio)
         if deleted_service is None:
             return GenericResponse(code=404, message="Servicio no encontrado")
-        return GenericResponse(code=200, message="Servicio eliminado exitosamente")
+        return deleted_service
     except ValueError as e:
         return GenericResponse(code=400, message=str(e))
     except Exception as e:
