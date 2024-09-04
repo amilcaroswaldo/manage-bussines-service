@@ -1,5 +1,6 @@
 from fastapi import FastAPI,Request
 from app.controllers.services_controllers import router as servicesControllers
+from app.controllers.unidad_medida_controller import router as unidadControllers
 from fastapi.responses import JSONResponse
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
@@ -7,6 +8,7 @@ from fastapi.exceptions import RequestValidationError
 app = FastAPI()
 
 app.include_router(servicesControllers)
+app.include_router(unidadControllers)
 
 
 @app.exception_handler(RequestValidationError)

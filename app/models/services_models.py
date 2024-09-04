@@ -6,11 +6,18 @@ class UnidadMedidaBase(BaseModel):
     nombre_medida: str
     tipo_medida: str
 
-class UnidadMedidaCreate(UnidadMedidaBase):
-    pass
+class UnidadMedidaRequest(UnidadMedidaBase):
+    unidad_medida_id: Optional[int] = None  # Puede ser None
+
+class UnidadMedidaRequestUpdate(BaseModel):
+    unidad_medida_id: int
+    nombre_medida: Optional[str] = None
+    tipo_medida: Optional[str] = None
 
 class UnidadMedidaResponse(UnidadMedidaBase):
     unidad_medida_id: int
+    nombre_medida: str
+    tipo_medida: str
 
 # CategoriaProducto Models
 class CategoriaProductoBase(BaseModel):
